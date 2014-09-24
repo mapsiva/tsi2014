@@ -15,6 +15,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -88,13 +90,20 @@ public class LoginTask extends AsyncTask<String, Integer, String>
 			
 			String str = inputStreamToString(response.getEntity().getContent()).toString();
 			
+			JSONObject jsonResponse = new JSONObject(str);
+			
 			Log.d("Login result: ", str);
+			Log.d("Login return: ", jsonResponse.getString("name"));
 		}
 		catch (ClientProtocolException e)
 		{
 			e.printStackTrace();
 		}
 		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		catch (JSONException e)
 		{
 			e.printStackTrace();
 		}
